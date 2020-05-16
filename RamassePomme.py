@@ -21,13 +21,13 @@ game_over = False
 #on dessine le fond et les acteurs
 def draw():
     screen.clear()
-    #screen.fill((137, 216, 245))
     screen.blit('verger',(0,0))
     pomme.draw()
     panier.draw()
     screen.draw.text("Score " + str(score), (30, 550), color=(VERT_FLUO), fontname="arcadeclassic", fontsize=48)
     screen.draw.text("Vies " + str(nombre_vies), (600, 550), color=(VERT_FLUO), fontname="arcadeclassic", fontsize=48)
     if game_over:
+        screen.fill((0, 0, 0))
         screen.draw.text("GAME OVER", (220, 200), color=(VERT_FLUO), fontname="arcadeclassic", fontsize=72)
         screen.draw.text("Appuyer sur Espace pour recommencer", (100, 300), color=(VERT_FLUO), fontname="arcadeclassic", fontsize=32)
 
