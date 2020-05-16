@@ -11,12 +11,15 @@ HEIGHT = 600
 APPLE_SPEED = 4
 BASKET_SPEED = 6
 VERT_FLUO = 66, 245, 69
+NB_VIE_INIT = 3
 
-#Variables
-score = 0
-nombre_vies = 3
-game_over = False
-# highscore = storage.setdefault("highscore", 0)
+def initialiserJeu():
+    global game_over, score, nombre_vies
+    game_over = False
+    score = 0
+    nombre_vies = NB_VIE_INIT
+
+initialiserJeu()
 
 #on dessine le fond et les acteurs
 def draw():
@@ -33,16 +36,9 @@ def draw():
 
 # on déplace le personnage
 def update():
-    global wait_timer
-    global game_over
-    global score
-    global nombre_vies
-
     if game_over:
         if keyboard.space:
-            game_over = False
-            score = 0
-            nombre_vies = 3
+            initialiserJeu()
         else:
             return
     else:
@@ -62,23 +58,29 @@ def deplacerPanier():
 
 #déplacement de la pomme
 def deplacerPomme():
-    global score
-    global nombre_vies
-    global game_over
     pomme.bottom += APPLE_SPEED
     if pomme.bottom > HEIGHT:
         sounds.impact_sol.play()
         mettrePommeEnPositionDepart()
-        nombre_vies -= 1
-        print("Raté! Il te reste = " + str(nombre_vies) + " vies")
-        if nombre_vies <= 0:
-            game_over = True
+        perdreVie()
     if pomme.colliderect(panier):
         sounds.impact_panier.play()
         mettrePommeEnPositionDepart()
-        score += 1
-        print("Tu m'as eu! Nouveau Score = " + str(score))
+        ajouterScore()
 
 def mettrePommeEnPositionDepart():
     pomme.bottom = 0
     pomme.left = random.randint(0, WIDTH)
+
+def ajouterScore():
+    global score
+    score += 1
+    print("Tu m'as eu! Nouveau Score = " + str(score))
+
+def perdreVie():
+    global nombre_vies
+    global game_over
+    nombre_vies -= 1
+    print("Raté! Il te reste = " + str(nombre_vies) + " vies")
+    if nombre_vies <= 0:
+        game_over = True
