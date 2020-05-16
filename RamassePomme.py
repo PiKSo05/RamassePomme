@@ -13,7 +13,7 @@ VERT_FLUO = 66, 245, 69
 
 #Variables
 score = 0
-# highscore = storage.setdefault("highscore", 0)
+nb_vies = 3
 
 #on dessine le fond et les acteurs
 def draw():
@@ -23,6 +23,7 @@ def draw():
     pomme.draw()
     panier.draw()
     screen.draw.text("Score " + str(score), (30, 550), color=(VERT_FLUO), fontname="arcadeclassic", fontsize=48)
+    screen.draw.text("Vie " + str(nb_vies), (650, 550), color=(VERT_FLUO), fontname="arcadeclassic", fontsize=48)
 
 # on déplace le personnage
 def update():
@@ -43,10 +44,13 @@ def deplacerPanier():
 #déplacement de la pomme
 def deplacerPomme():
     global score
+    global nb_vies
     pomme.bottom += APPLE_SPEED
     if pomme.bottom > HEIGHT:
         sounds.impact_sol.play()
         mettrePommeEnPositionDepart()
+        nb_vies -= 1
+        print("Rate! Il te reste " + str(nb_vies) + " vies!")
     if pomme.colliderect(panier):
         sounds.impact_panier.play()
         mettrePommeEnPositionDepart()
