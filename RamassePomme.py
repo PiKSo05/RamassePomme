@@ -16,7 +16,6 @@ VERT_FLUO = 66, 245, 69
 score = 0
 nombre_vies = 3
 game_over = False
-# highscore = storage.setdefault("highscore", 0)
 
 #on dessine le fond et les acteurs
 def draw():
